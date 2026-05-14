@@ -1,8 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEBKIT</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #050505 url('background.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle, transparent 20%, #050505 90%);
+            z-index: 1;
+        }
+
+        .neon-flash {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+            animation: flash 8s infinite;
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 0; }
+            45% { opacity: 0; }
+            50% { opacity: 0.15; background: #4b0082; box-shadow: inset 0 0 100px #4b0082; }
+            55% { opacity: 0; }
+        }
+
+        /* Header Text */
+        .header-container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px #4b0082, 0 0 20px #4b0082;
+            color: #b388ff;
+        }
+
+        /* The Styled Button */
+        .trigger-btn {
+            position: relative;
+            z-index: 10;
+            padding: 20px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #fff;
+            background: #1a1a1a;
+            border: 2px solid #4b0082;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(75, 0, 211, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        .trigger-btn:hover {
+            background: #4b0082;
+            box-shadow: 0 0 30px #4b0082;
+            transform: scale(1.05);
+        }
+
+        /* Pulsing Animation */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(75, 0, 130, 0.7);
+                transform: scale(1);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(75, 0, 130, 0);
+                transform: scale(1.02);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(75, 0, 130, 0);
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
 <body>
-<p>Use-after-free in Webkit EventTarget. Bug 1 there are two bugs currently </p>
-<button onclick="main()">Click to trigger the bug</button>
+
+<div class="neon-flash"></div>
+
+<div class="header-container">
+    <p>Use-after-free in Webkit EventTarget. Bug 1 by Brutal Sam</p>
+</div>
+
+<button class="trigger-btn" onclick="main()">Execute Trigger</button>
+
+<div class="header-container">
+    <p>Use-after-free in FontFace. Bug 2 by NTFargo</p>
+</div>
+
+<button style="margin-top: -30px;" class="trigger-btn" onclick="window.location.href='https://pixelpop25.github.io/ps5webkit/test.html'"; >Execute Trigger</button>
+
 
 <script>
 function main() {
@@ -30,7 +147,6 @@ function main() {
 
     b.dispatchEvent(new Event('a', { bubbles: true }));
 }
-
 </script>
 
 </body>
